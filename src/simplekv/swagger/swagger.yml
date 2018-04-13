@@ -1,0 +1,214 @@
+swagger: "2.0"
+info:
+  title: Simple KV API
+  description: beego has a very cool tools to autogenerate documents for your API
+    and SimpleKV used it
+  version: 1.0.0
+  termsOfService: https://123xe.vn/cms/dieukhoan
+  contact:
+    email: thanhnt@123xe.vn
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+basePath: /v1
+paths:
+  /bigsetkv/:
+    post:
+      tags:
+      - bigsetkv
+      description: Put key-value to cloud
+      operationId: BigsetKVController.Post
+      parameters:
+      - in: query
+        name: sessionID
+        description: Session ID
+        required: true
+        type: string
+      - in: query
+        name: appID
+        description: App ID
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: The KVObject content
+        required: true
+        schema:
+          $ref: '#/definitions/models.KVObject'
+      responses:
+        "200":
+          description: '{string} models.KVObject.Key'
+        "403":
+          description: body is empty
+  /bigsetkv/get:
+    get:
+      tags:
+      - bigsetkv
+      description: find key-value by key
+      operationId: BigsetKVController.Get
+      parameters:
+      - in: query
+        name: sessionID
+        description: Session ID of user/app
+        required: true
+        type: string
+      - in: query
+        name: appID
+        description: appID
+        required: true
+        type: string
+      - in: query
+        name: key
+        description: the key of kv you want to get
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{simplekv} models.KVObject'
+        "403":
+          description: ': empty object'
+  /bigsetkv/multiget:
+    get:
+      tags:
+      - bigsetkv
+      description: find key-value by key
+      operationId: BigsetKVController.MultiGet
+      parameters:
+      - in: query
+        name: sessionID
+        description: Session ID of user/app
+        required: true
+        type: string
+      - in: query
+        name: appID
+        description: appID
+        required: true
+        type: string
+      - in: query
+        name: keys
+        description: the keys of kv you want to get, saparated by comma,
+        required: true
+        type: array
+        items:
+          type: string
+      responses:
+        "200":
+          description: '{bigsetkv} []models.KVObject'
+        "403":
+          description: ': empty object'
+  /bigsetkv/remove:
+    get:
+      tags:
+      - bigsetkv
+      description: find key-value by key
+      operationId: BigsetKVController.Remove
+      parameters:
+      - in: query
+        name: sessionID
+        description: Session ID of user/app
+        required: true
+        type: string
+      - in: query
+        name: appID
+        description: appID
+        required: true
+        type: string
+      - in: query
+        name: keys
+        description: the keys of kv you want to get, saparated by comma,
+        required: true
+        type: array
+        items:
+          type: string
+      responses:
+        "200":
+          description: '{deletedKeys} []string'
+        "403":
+          description: ': empty object'
+  /simplekv/:
+    post:
+      tags:
+      - simplekv
+      description: Put key-value to cloud
+      operationId: SimpleKVController.Post
+      parameters:
+      - in: body
+        name: body
+        description: The KVObject content
+        required: true
+        schema:
+          $ref: '#/definitions/models.KVObject'
+      responses:
+        "200":
+          description: '{string} models.KVObject.Key'
+        "403":
+          description: body is empty
+  /simplekv/{key}:
+    get:
+      tags:
+      - simplekv
+      description: find key-value by key
+      operationId: SimpleKVController.Get
+      parameters:
+      - in: path
+        name: key
+        description: the key of kv you want to get
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{simplekv} models.KVObject'
+        "403":
+          description: ': empty object'
+definitions:
+  models.KVObject:
+    title: KVObject
+    type: object
+    properties:
+      Key:
+        type: string
+      Value:
+        type: string
+  models.Object:
+    title: Object
+    type: object
+    properties:
+      ObjectId:
+        type: string
+      PlayerName:
+        type: string
+      Score:
+        type: integer
+        format: int64
+  models.Profile:
+    title: Profile
+    type: object
+    properties:
+      Address:
+        type: string
+      Age:
+        type: integer
+        format: int64
+      Email:
+        type: string
+      Gender:
+        type: string
+  models.User:
+    title: User
+    type: object
+    properties:
+      Id:
+        type: string
+      Password:
+        type: string
+      Profile:
+        $ref: '#/definitions/models.Profile'
+      Username:
+        type: string
+tags:
+- name: simplekv
+  description: |
+    Operations about simplekv
+- name: bigsetkv
+  description: |
+    Operations about simplekv
