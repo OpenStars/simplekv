@@ -30,6 +30,41 @@ func getBSClient() *thriftpool.ThriftSocketClient{
 type BigsetKVController struct {
 	beego.Controller
 }
+ 
+// @Title PutItem
+// @Description Put key-value to cloud
+// @Param	sessionID		query 	string	true		"Session ID"
+// @Param	appID		query 	string	true		"App ID"
+// @Param	key		query  	string	true		"The Key"
+// @Param	val		query  	string	true		"The Value"
+// @Success 200 {string} models.KVObject.Key
+// @Failure 403 body is empty
+// @router /putitem [post]
+func (o *BigsetKVController) PutItem() {
+
+	sessionID := o.GetString("sessionID")
+	fmt.Println("PutItem ",o)
+
+	//Todo: check sessionID 
+
+	appID := o.GetString("appID")
+	fmt.Printf("sessionID: %s, appID: %s, object: ",sessionID , appID)
+	key := o.GetString("key") 
+	val := o.GetString("val") 
+	
+	o.Data["json"] = map[string]string{"Key":key}
+
+	client := getBSClient(); 
+	
+	if client != nil {
+		defer client.BackToPool();
+		fmt.Print(  client.Client.(*bs.TStringBigSetKVServiceClient).BsPutItem(context.Background(),  
+				bs.TStringKey(appID)  , &bs.TItem{[]byte( key ), []byte(val)}) )
+	}
+	//models.KV[ob.Key] = ob.Value;
+	o.ServeJSON()
+}
+
 
 // @Title Post
 // @Description Put key-value to cloud
@@ -66,6 +101,7 @@ func (o *BigsetKVController) Post() {
 	//models.KV[ob.Key] = ob.Value;
 	o.ServeJSON()
 }
+
 
 // @Title Get
 // @Description find key-value by key

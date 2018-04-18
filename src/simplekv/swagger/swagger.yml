@@ -34,7 +34,7 @@ paths:
         description: The KVObject content
         required: true
         schema:
-          $ref: '#/definitions/models.KVObject'
+          $ref: '#/definitions/.KVObject'
       responses:
         "200":
           description: '{string} models.KVObject.Key'
@@ -96,6 +96,38 @@ paths:
           description: '{bigsetkv} []models.KVObject'
         "403":
           description: ': empty object'
+  /bigsetkv/putitem:
+    post:
+      tags:
+      - bigsetkv
+      description: Put key-value to cloud
+      operationId: BigsetKVController.PutItem
+      parameters:
+      - in: query
+        name: sessionID
+        description: Session ID
+        required: true
+        type: string
+      - in: query
+        name: appID
+        description: App ID
+        required: true
+        type: string
+      - in: query
+        name: key
+        description: The Key
+        required: true
+        type: string
+      - in: query
+        name: val
+        description: The Value
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{string} models.KVObject.Key'
+        "403":
+          description: body is empty
   /bigsetkv/remove:
     get:
       tags:
@@ -137,7 +169,7 @@ paths:
         description: The KVObject content
         required: true
         schema:
-          $ref: '#/definitions/models.KVObject'
+          $ref: '#/definitions/.KVObject'
       responses:
         "200":
           description: '{string} models.KVObject.Key'
@@ -161,50 +193,12 @@ paths:
         "403":
           description: ': empty object'
 definitions:
-  models.KVObject:
-    title: KVObject
+  .KVObject:
     type: object
-    properties:
-      Key:
-        type: string
-      Value:
-        type: string
-  models.Object:
-    title: Object
+  .Object:
     type: object
-    properties:
-      ObjectId:
-        type: string
-      PlayerName:
-        type: string
-      Score:
-        type: integer
-        format: int64
-  models.Profile:
-    title: Profile
+  .User:
     type: object
-    properties:
-      Address:
-        type: string
-      Age:
-        type: integer
-        format: int64
-      Email:
-        type: string
-      Gender:
-        type: string
-  models.User:
-    title: User
-    type: object
-    properties:
-      Id:
-        type: string
-      Password:
-        type: string
-      Profile:
-        $ref: '#/definitions/models.Profile'
-      Username:
-        type: string
 tags:
 - name: simplekv
   description: |

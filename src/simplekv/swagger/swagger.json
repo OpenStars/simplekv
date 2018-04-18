@@ -43,7 +43,7 @@
                         "description": "The KVObject content",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.KVObject"
+                            "$ref": "#/definitions/.KVObject"
                         }
                     }
                 ],
@@ -140,6 +140,53 @@
                 }
             }
         },
+        "/bigsetkv/putitem": {
+            "post": {
+                "tags": [
+                    "bigsetkv"
+                ],
+                "description": "Put key-value to cloud",
+                "operationId": "BigsetKVController.PutItem",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "sessionID",
+                        "description": "Session ID",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "appID",
+                        "description": "App ID",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "key",
+                        "description": "The Key",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "val",
+                        "description": "The Value",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{string} models.KVObject.Key"
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            }
+        },
         "/bigsetkv/remove": {
             "get": {
                 "tags": [
@@ -197,7 +244,7 @@
                         "description": "The KVObject content",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.KVObject"
+                            "$ref": "#/definitions/.KVObject"
                         }
                     }
                 ],
@@ -239,70 +286,14 @@
         }
     },
     "definitions": {
-        "models.KVObject": {
-            "title": "KVObject",
-            "type": "object",
-            "properties": {
-                "Key": {
-                    "type": "string"
-                },
-                "Value": {
-                    "type": "string"
-                }
-            }
+        ".KVObject": {
+            "type": "object"
         },
-        "models.Object": {
-            "title": "Object",
-            "type": "object",
-            "properties": {
-                "ObjectId": {
-                    "type": "string"
-                },
-                "PlayerName": {
-                    "type": "string"
-                },
-                "Score": {
-                    "type": "integer",
-                    "format": "int64"
-                }
-            }
+        ".Object": {
+            "type": "object"
         },
-        "models.Profile": {
-            "title": "Profile",
-            "type": "object",
-            "properties": {
-                "Address": {
-                    "type": "string"
-                },
-                "Age": {
-                    "type": "integer",
-                    "format": "int64"
-                },
-                "Email": {
-                    "type": "string"
-                },
-                "Gender": {
-                    "type": "string"
-                }
-            }
-        },
-        "models.User": {
-            "title": "User",
-            "type": "object",
-            "properties": {
-                "Id": {
-                    "type": "string"
-                },
-                "Password": {
-                    "type": "string"
-                },
-                "Profile": {
-                    "$ref": "#/definitions/models.Profile"
-                },
-                "Username": {
-                    "type": "string"
-                }
-            }
+        ".User": {
+            "type": "object"
         }
     },
     "tags": [
