@@ -43,7 +43,7 @@
                         "description": "The KVObject content",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/.KVObject"
+                            "$ref": "#/definitions/models.KVObject"
                         }
                     }
                 ],
@@ -244,7 +244,7 @@
                         "description": "The KVObject content",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/.KVObject"
+                            "$ref": "#/definitions/models.KVObject"
                         }
                     }
                 ],
@@ -286,14 +286,70 @@
         }
     },
     "definitions": {
-        ".KVObject": {
-            "type": "object"
+        "models.KVObject": {
+            "title": "KVObject",
+            "type": "object",
+            "properties": {
+                "Key": {
+                    "type": "string"
+                },
+                "Value": {
+                    "type": "string"
+                }
+            }
         },
-        ".Object": {
-            "type": "object"
+        "models.Object": {
+            "title": "Object",
+            "type": "object",
+            "properties": {
+                "ObjectId": {
+                    "type": "string"
+                },
+                "PlayerName": {
+                    "type": "string"
+                },
+                "Score": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            }
         },
-        ".User": {
-            "type": "object"
+        "models.Profile": {
+            "title": "Profile",
+            "type": "object",
+            "properties": {
+                "Address": {
+                    "type": "string"
+                },
+                "Age": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "Email": {
+                    "type": "string"
+                },
+                "Gender": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.User": {
+            "title": "User",
+            "type": "object",
+            "properties": {
+                "Id": {
+                    "type": "string"
+                },
+                "Password": {
+                    "type": "string"
+                },
+                "Profile": {
+                    "$ref": "#/definitions/models.Profile"
+                },
+                "Username": {
+                    "type": "string"
+                }
+            }
         }
     },
     "tags": [

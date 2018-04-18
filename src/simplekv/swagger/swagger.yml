@@ -34,7 +34,7 @@ paths:
         description: The KVObject content
         required: true
         schema:
-          $ref: '#/definitions/.KVObject'
+          $ref: '#/definitions/models.KVObject'
       responses:
         "200":
           description: '{string} models.KVObject.Key'
@@ -169,7 +169,7 @@ paths:
         description: The KVObject content
         required: true
         schema:
-          $ref: '#/definitions/.KVObject'
+          $ref: '#/definitions/models.KVObject'
       responses:
         "200":
           description: '{string} models.KVObject.Key'
@@ -193,12 +193,50 @@ paths:
         "403":
           description: ': empty object'
 definitions:
-  .KVObject:
+  models.KVObject:
+    title: KVObject
     type: object
-  .Object:
+    properties:
+      Key:
+        type: string
+      Value:
+        type: string
+  models.Object:
+    title: Object
     type: object
-  .User:
+    properties:
+      ObjectId:
+        type: string
+      PlayerName:
+        type: string
+      Score:
+        type: integer
+        format: int64
+  models.Profile:
+    title: Profile
     type: object
+    properties:
+      Address:
+        type: string
+      Age:
+        type: integer
+        format: int64
+      Email:
+        type: string
+      Gender:
+        type: string
+  models.User:
+    title: User
+    type: object
+    properties:
+      Id:
+        type: string
+      Password:
+        type: string
+      Profile:
+        $ref: '#/definitions/models.Profile'
+      Username:
+        type: string
 tags:
 - name: simplekv
   description: |
